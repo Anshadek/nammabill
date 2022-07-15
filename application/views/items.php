@@ -344,10 +344,11 @@
          </section>
          <!-- /.content -->
          <?php
-         $i = 1;
-         $qs5 = "SELECT adjustment_qty,id,updated_at FROM db_stockadjustmentitems where  item_id=" .$q_id. " ORDER BY id desc";
-         $q5 = $this->db->query($qs5);
-         if ($q5->num_rows() > 0) {
+         if ($q_id > 0) {
+            $i = 1;
+            $qs5 = "SELECT adjustment_qty,id,updated_at FROM db_stockadjustmentitems where  item_id=" .$q_id. " ORDER BY id desc";
+            $q5 = $this->db->query($qs5);
+          
          ?>
          <div class="row">
             <div class="col-md-12">
