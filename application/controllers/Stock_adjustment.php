@@ -54,11 +54,14 @@ class Stock_adjustment extends MY_Controller {
 		$no = $_POST['start'];
 		foreach ($list as $stock_adjustment) {
 			
+			
 			$no++;
 			$row = array();
 			$row[] = '<input type="checkbox" name="checkbox[]" value='.$stock_adjustment->id.' class="checkbox column_checkbox" >';
 			$row[] = show_date($stock_adjustment->adjustment_date);
 			$row[] = $stock_adjustment->reference_no;
+			$row[] = ucfirst($stock_adjustment->adjustment_note);
+			$row[] = ucfirst($stock_adjustment->warehouse_name);
 			$row[] = ucfirst($stock_adjustment->created_by);
 					$str2 = '<div class="btn-group" title="View Account">
 										<a class="btn btn-primary btn-o dropdown-toggle" data-toggle="dropdown" href="#">
@@ -89,6 +92,7 @@ class Stock_adjustment extends MY_Controller {
 									</div>';			
 
 			$row[] = $str2;
+			
 			$data[] = $row;
 		}
 
@@ -103,6 +107,7 @@ class Stock_adjustment extends MY_Controller {
 	}
 	
 	public function delete_stock_adjustment(){
+	
 		$this->permission_check_with_msg('stock_adjustment_delete');
 		$id=$this->input->post('q_id');
 		echo $this->stock_adjustment->delete_stock_adjustment($id);

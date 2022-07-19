@@ -52,7 +52,11 @@
                                      echo "<input type='hidden' name='warehouse_id' id='warehouse_id' value='".get_store_warehouse_id()."'>";
                                      }?>
                                   <!-- Warehouse Code end -->
-
+											 <label for="brand_id" class="col-sm-2 control-label"><?= $this->lang->line('item_name'); ?></label>
+                                 <div class="col-sm-3">
+                                    <input class="form-control" id="item_name"  name="item_name">
+                                    <span id="item_name_msg" style="display:none" class="text-danger"></span>
+                                 </div>
                                 </div>
 
                               <div class="form-group">
@@ -217,12 +221,14 @@
 </script>
 <script type="text/javascript">
   function load_reports(){
+	
    var store_id=$("#store_id").val();
    var brand_id=$("#brand_id").val();
    var category_id=$("#category_id").val();
    var warehouse_id=$("#warehouse_id").val();
+	var item_name=$("#item_name").val();
    $(".box").append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
-        $.post(base_url+"reports/get_stock_report",{warehouse_id:warehouse_id,store_id:store_id,brand_id:brand_id,category_id:category_id},function(result){
+        $.post(base_url+"reports/get_stock_report",{item_name:item_name,warehouse_id:warehouse_id,store_id:store_id,brand_id:brand_id,category_id:category_id},function(result){
             result = $.parseJSON(result);
 
               $.each( result, function( key, val ) {

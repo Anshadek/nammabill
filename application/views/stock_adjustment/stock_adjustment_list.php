@@ -71,6 +71,8 @@
                                     </th>
                                     <th><?= $this->lang->line('adjustment_date'); ?></th>
                                     <th><?= $this->lang->line('reference_no'); ?></th>
+												<th><?= $this->lang->line('note'); ?></th>
+												<th><?= $this->lang->line('warehouse'); ?></th>
                                     <th><?= $this->lang->line('created_by'); ?></th>
                                     <th><?= $this->lang->line('action'); ?></th>
                                  </tr>

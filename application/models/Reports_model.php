@@ -579,6 +579,7 @@ class Reports_model extends CI_Model {
 
 		$this->db->from("db_tax as b");
 		$this->db->where("b.id=a.tax_id");
+		
 		$this->db->where("a.service_bit=0");
 		$this->db->join("db_brands as c","c.id=a.brand_id","left");
 		$this->db->join("db_category as d","d.id=a.category_id","left");
@@ -588,6 +589,9 @@ class Reports_model extends CI_Model {
 		}
 		if(!empty($category_id)){
 			$this->db->where("a.category_id",$category_id);
+		}
+		if(!empty($item_name)){
+			$this->db->where("a.item_name",$item_name);
 		}
 
 		//echo $this->db->get_compiled_select();exit;
@@ -658,7 +662,7 @@ class Reports_model extends CI_Model {
 	}
 	public function brand_wise_stock(){
 		extract($_POST);
-
+		
 		if(!empty($store_id)){
 			$this->db->where("b.store_id",$store_id);
 		}
@@ -670,6 +674,11 @@ class Reports_model extends CI_Model {
 		if(!empty($brand_id)){
 			$this->db->where("b.id",$brand_id);
 		}
+		// if(!empty($item_name)){
+		
+		// 	$this->db->like("b.item_name",$item_name);
+			
+		// }
 
 
 		//echo $this->db->get_compiled_select();exit();

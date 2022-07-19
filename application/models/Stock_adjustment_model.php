@@ -8,6 +8,8 @@ class Stock_adjustment_model extends CI_Model {
 								'a.id',
 								'a.adjustment_date',
 								'a.reference_no',
+								'w.warehouse_name',
+								'a.adjustment_note',
 								'a.created_by',
 								'a.store_id'
 								); //set column field database for datatable orderable
@@ -15,6 +17,8 @@ class Stock_adjustment_model extends CI_Model {
 								'a.id',
 								'a.adjustment_date',
 								'a.reference_no',
+								'w.warehouse_name',
+								'a.adjustment_note',
 								'a.created_by',
 								'a.store_id'
 								); //set column field database for datatable searchable 
@@ -32,9 +36,14 @@ class Stock_adjustment_model extends CI_Model {
 		
 		/*If warehouse selected*/
 		$warehouse_id = $this->input->post('warehouse_id');
+		
 		if(!empty($warehouse_id)){
 			$this->db->join('db_warehouse as w','w.id='.$warehouse_id,'left');
 			$this->db->where('a.warehouse_id',$warehouse_id);
+		}else{
+			
+			$this->db->join('db_warehouse as w', 'w.id = a.warehouse_id', 'LEFT');
+			//$this->db->join('db_warehouse as w','w.id='.$warehouse_id,'left');
 		}
 
 		
@@ -253,6 +262,7 @@ class Stock_adjustment_model extends CI_Model {
 		}
 
 		$q7=$this->db->delete("db_stockadjustmentitems");
+		
 		#----------------------------------
 
 		$q6=$this->db->query("select id from db_items");

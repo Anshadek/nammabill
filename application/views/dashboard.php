@@ -364,7 +364,9 @@
           <!-- PRODUCT LIST -->
           <div class="box box-primary">
             <div class="box-header with-border">
+						
               <h3 class="box-title text-uppercase"><?= $this->lang->line('recentl_sales_invoices'); ?></h3>
+							<a href="<?= base_url('reports/sales') ?>"><button class="btn btn-success pull-right">View more</button></a>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">

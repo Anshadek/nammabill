@@ -256,7 +256,9 @@
                            </div>
 
                         </div>
-
+								<?php
+								if ($q_id == 0 || isset($q_id) == false) {
+								?>
                         <div class="row variant_div">
                            <div class="col-md-12">
                               <div class="box box-info ">
@@ -303,6 +305,7 @@
                            </div>
 
                         </div>
+								<?php } ?>
 
                         <!-- /row -->
                         <!-- /.box-body -->
@@ -346,7 +349,7 @@
          <?php
          if ($q_id > 0) {
             $i = 1;
-            $qs5 = "SELECT adjustment_qty,id,updated_at FROM db_stockadjustmentitems where  item_id=" .$q_id. " ORDER BY id desc";
+            $qs5 = "SELECT adjustment_qty,id,updated_at,adjustment_id  FROM db_stockadjustmentitems where  item_id=" .$q_id. " ORDER BY id desc";
             $q5 = $this->db->query($qs5);
           
          ?>
@@ -379,9 +382,11 @@
                                           <td><?php echo $i++; ?></td>
                                           <td><?= $date ?></td>
                                           <td><?php echo $res5->adjustment_qty ?></td>
-                                          <td> <a href="<?=  base_url('items/delete_stockadjustment?q_id='.$res5->id)?>">
-                                             <i class="fa fa-trash" aria-hidden="true"></i>
-                                          </a> 
+                                          <td> 
+														<a style="cursor:pointer" title="Delete Record ?" onclick="delete_stock_adjustment(<?= $res5->adjustment_id ?>)">
+													<i class="fa fa-fw fa-trash text-red"></i>Delete
+												</a>	
+														
                                        </td>
                                        </tr>
 
@@ -411,6 +416,8 @@
    <?php include "comman/code_js_sound.php"; ?>
    <!-- TABLES CODE -->
    <?php include "comman/code_js.php"; ?>
+	
+	
    <script src="<?php echo $theme_link; ?>js/items.js?ver=1"></script>
    <script src="<?php echo $theme_link; ?>js/modals.js"></script>
    <script type="text/javascript">
@@ -429,6 +436,32 @@
       <?php if ($child_bit == 1 || !empty($item_name)) { ?>
          $("#item_group").parent().addClass('hide');
       <?php } ?>
+
+		function delete_stock_adjustment(q_id)
+{
+
+    var base_url=$("#base_url").val();
+   if(confirm("Do You Wants to Delete Record ?")){
+    $(".box").append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
+    $.post(base_url+"stock_adjustment/delete_stock_adjustment",{q_id:q_id},function(result){
+   //alert(result);return;
+     if(result=="success")
+        {
+          toastr["success"]("Record Deleted Successfully!");
+          $('#example2').DataTable().ajax.reload();
+			 location.reload();
+        }
+        else if(result=="failed"){
+          toastr["error"]("Failed to Delete .Try again!");
+        }
+        else{
+           toastr["error"](result);
+        }
+        $(".overlay").remove();
+        return false;
+   });
+   }//end confirmation
+}
    </script>
    <!-- Make sidebar menu hughlighter/selector -->
    <script>
